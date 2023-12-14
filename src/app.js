@@ -4,6 +4,11 @@ const PORT = 8080;
 
 app.use(express.json());
 
+// Ruta para la raíz
+app.get('/', (req, res) => {
+  res.send('¡Tienda ecommerce!');
+});
+
 // Rutas para productos
 const productsRouter = require('./routes/products');
 app.use('/api/products', productsRouter);
