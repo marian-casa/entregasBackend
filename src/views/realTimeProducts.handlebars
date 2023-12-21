@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Real Time Products</title>
+</head>
+<body>
+  <h1>Real Time Products</h1>
+  <ul id="productList">
+    <!-- Aquí se mostrará la lista de productos -->
+  </ul>
+
+  <!-- Formulario para crear un nuevo producto -->
+  <form id="createProductForm">
+    <label for="productName">Nombre del producto:</label>
+    <input type="text" id="productName" name="productName" required>
+    <button type="submit">Crear Producto</button>
+  </form>
+
+  <!-- Script para manejar eventos de Websockets y actualizar la lista -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+  <script>
+    const socket = io();
+
+    // Escucha eventos de Websockets para actualizar la lista
+    socket.on('productListUpdate', (updatedProductList) => {
+      // Actualiza dinámicamente la lista de productos en la interfaz
+      const productList = document.getElementById('productList');
+      productList.innerHTML = updatedProductList.map(product => `<li>${product.name}</li>`).join('');
+    });
+
+    // Maneja el envío del formulario para crear un nuevo producto
+    const createProductForm = document.getElementById('createProductForm');
+    createProductForm.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const productName = document.getElementById('productName').value;
+
+      // Emite un evento de Websockets para crear un nuevo producto
+      socket.emit('createProduct', { name: productName });
+    });
+  </script>
+</body>
+</html>
