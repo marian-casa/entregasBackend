@@ -5,8 +5,10 @@ const socketIO = require('socket.io');
 const path = require('path');
 
 const app = express();
-const server = http.createServer(app);
+const server = app.listen(8080,()=>console.log("Listening on PORT: 8080"));
 const io = socketIO(server);
+
+require('dotenv').config()
 
 app.use(express.json());
 
@@ -58,3 +60,44 @@ app.use('/api/carts', cartsRouter);
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
 });
+
+// 3. Add your connection string into your application code
+const { MongoClient, ServerApiVersion } = require('mongodb');
+const uri = mongoose.connect(process.env.mongodbPassword)
+
+// Create a MongoClient with a MongoClientOptions object to set the Stable API version
+const client = new MongoClient(uri, {
+  serverApi: {
+    version: ServerApiVersion.v1,
+    strict: true,
+    deprecationErrors: true,
+  }
+});
+
+async function run() {
+  try {
+    // Connect the client to the server	(optional starting in v4.7)
+    await client.connect();
+    // Send a ping to confirm a successful connection
+    await client.db("admin").command({ ping: 1 });
+    console.log("Pinged your deployment. You successfully connected to MongoDB!");
+  } finally {
+    // Ensures that the client will close when you finish/error
+    await client.close();
+  }
+}
+run().catch(console.dir);
+
+import express from 'express';
+import userRouter from './routes/userRouter';
+import mongoose from 'mongoose';
+import { connect } from 'http2';
+
+
+mongoose.connect(uri, (error)=>{
+  if(error){
+    console.log('Cannot connect to database: '+error);
+  }
+})
+
+app.use('/api/users', userRouter)
