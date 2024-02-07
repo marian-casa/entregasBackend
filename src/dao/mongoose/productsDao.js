@@ -1,4 +1,4 @@
-const mongoose = require('../config/mongoose'); // Asegúrate de tener tu archivo de configuración Mongoose
+import mongoose from 'mongoose';
 
 const productSchema = new mongoose.Schema({
   title: String,

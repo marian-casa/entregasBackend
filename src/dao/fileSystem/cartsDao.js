@@ -1,5 +1,5 @@
-const fs = require('fs/promises');
-const path = require('path');
+import fs from "fs/promises"
+import path from "path";
 
 const cartFilePath = path.join(__dirname, '../data/carrito.json');
 
@@ -32,5 +32,4 @@ const createCart = async () => {
 module.exports = {
   getCartById,
   createCart,
-  // ... other functions
 };

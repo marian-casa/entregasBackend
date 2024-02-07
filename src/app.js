@@ -1,103 +1,74 @@
-const express = require('express');
-const expressHandlebars = require('express-handlebars');
-const http = require('http');
-const socketIO = require('socket.io');
-const path = require('path');
+import express from "express";
+import handlebars from "express-handlebars";
+import dotenv from "dotenv";
+import mongoose from "mongoose";
+import MongoStore from "connect-mongo";
+import session from "express-session";
+import cookieParser from "cookie-parser";
+import passport from "passport";
+import initializePassport from "./config/passport.config.js";
+import loginRouter from "./routes/login.routes.js";
+import signupRouter from "./routes/signup.routes.js";
+import sessionRouter from "./routes/session.routes.js";
+import { __dirname } from "./utils.js";
 
+dotenv.config();
 const app = express();
-const server = app.listen(8080,()=>console.log("Listening on PORT: 8080"));
-const io = socketIO(server);
+const DB_URL = process.env.DB_URL || "mongodb://localhost:27017/test";
+const PORT = process.env.PORT || 8080;
+const COOKIESECRET = process.env.CODERSECRET;
 
-require('dotenv').config()
-
+//middlewares
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser(COOKIESECRET));
+//definiendo la carpeta publica
+app.use(express.static(__dirname + "/public"));
 
+//configuramos handlebars
+app.engine("handlebars", handlebars.engine());
+app.set("views", __dirname + "/views");
+app.set("view engine", "handlebars");
 
-// Configura Handlebars
-app.engine(
-  'handlebars',
-  expressHandlebars({ defaultLayout: 'main', layoutsDir: __dirname + '/views/layouts' })
+//configuramos la session
+app.use(
+  session({
+    store: MongoStore.create({
+      mongoUrl: DB_URL,
+      mongoOptions: {
+        useNewUrlParser: true,
+      },
+      ttl: 600,
+    }),
+    secret: COOKIESECRET,
+    resave: false,
+    saveUninitialized: true,
+  })
 );
-app.set('view engine', 'handlebars');
-app.set('views', path.join(__dirname, 'views'));
 
+//inicializamos passport
+initializePassport();
+app.use(passport.initialize());
+app.use(passport.session());
 
-// Ruta para la vista index.handlebars
-app.get('/', (req, res) => {
-  res.render('index');
-});
-
-// Ruta para la vista realTimeProducts.handlebars
-app.get('/realtimeproducts', (req, res) => {
-  res.render('realTimeProducts');
-});
-
-// Websockets
-io.on('connection', (socket) => {
-  console.log('Cliente conectado');
-});
-
-
-// Inicia el servidor
-const PORT = 8080;
-server.listen(PORT, () => {
-  console.log(`Servidor en http://localhost:${PORT}`);
-});
-
-// Ruta para la raíz
-app.get('/', (req, res) => {
-  res.send('¡Tienda ecommerce!');
-});
-
-// Rutas para productos
-const productsRouter = require('./routes/products');
-app.use('/api/products', productsRouter);
-
-// Rutas para carritos
-const cartsRouter = require('./routes/carts');
-app.use('/api/carts', cartsRouter);
-
-app.listen(PORT, () => {
-  console.log(`Server running at http://localhost:${PORT}`);
-});
-
-// 3. Add your connection string into your application code
-const { MongoClient, ServerApiVersion } = require('mongodb');
-const uri = mongoose.connect(process.env.mongodbPassword)
-
-// Create a MongoClient with a MongoClientOptions object to set the Stable API version
-const client = new MongoClient(uri, {
-  serverApi: {
-    version: ServerApiVersion.v1,
-    strict: true,
-    deprecationErrors: true,
-  }
-});
-
-async function run() {
+app.use("/", sessionRouter);
+app.use("/login", loginRouter);
+app.use("/signup", signupRouter);
+const environment = async () => {
   try {
-    // Connect the client to the server	(optional starting in v4.7)
-    await client.connect();
-    // Send a ping to confirm a successful connection
-    await client.db("admin").command({ ping: 1 });
-    console.log("Pinged your deployment. You successfully connected to MongoDB!");
-  } finally {
-    // Ensures that the client will close when you finish/error
-    await client.close();
+    await mongoose.connect(DB_URL);
+  } catch (error) {
+    console.log(error);
   }
-}
-run().catch(console.dir);
+};
 
-import express from 'express';
-import userRouter from './routes/userRouter';
-import mongoose from 'mongoose';
-import { connect } from 'http2';
+//inicializamos la base de datos
+environment();
 
+//inicializamos el servidor
+const server = app.listen(PORT, () => {
+  console.log(`Server listening on port ${PORT}`);
+});
 
-mongoose.connect(uri, (error)=>{
-  if(error){
-    console.log('Cannot connect to database: '+error);
-  }
-})
-
-app.use('/api/users', userRouter)
+//manejamos los errores
+server.on("error", (error) => console.log(error));

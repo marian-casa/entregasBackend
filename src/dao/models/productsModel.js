@@ -1,14 +1,16 @@
-const mongoose = require('mongoose');
+import mongoose from "mongoose";
+import paginate from "mongoose-paginate-v2";
 
-const productSchema = new mongoose.Schema({
-  title: String,
-  description: String,
-  price: Number,
-  thumbnail: String,
-  code: String,
-  stock: Number,
+const ProductSchema = new mongoose.Schema({
+	title: { type: String, required: true, max: 100 },
+	description: { type: String, required: true, max: 200 },
+	price: { type: Number, default: 0 },
+	thumbnail: { type: String, required: true, max: 100 },
+	code: { type: String, required: true, max: 10, unique: true },
+	stock: { type: Number, default: 1 },
+	category: { type: String, required: true, max: 20 },
 });
 
-const Product = mongoose.model('Product', productSchema);
+ProductSchema.plugin(paginate);
 
-module.exports = Product;
+export default mongoose.model("Products", ProductSchema);

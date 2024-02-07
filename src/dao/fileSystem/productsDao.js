@@ -1,5 +1,5 @@
-const fs = require('fs/promises');
-const path = require('path');
+import fs from "fs/promises"
+import path from "path";
 
 const productsFilePath = path.join(__dirname, '../data/products.json');
 
@@ -29,5 +29,4 @@ const getProductById = async (productId) => {
 module.exports = {
   getProducts,
   getProductById,
-  // ... other functions
 };

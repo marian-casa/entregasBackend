@@ -1,93 +1,103 @@
 [
     {
-      "id": 1,
       "title": "Procesador Intel Core i9",
       "description": "Potente procesador para alto rendimiento",
-      "price": 500,
-      "thumbnail": "ruta/procesador.jpg",
+      "price": 700,
+      "thumbnail": "https://http2.mlstatic.com/D_NQ_NP_774021-MLA72440589472_102023-O.webp",
       "code": "CPU001",
-      "stock": 20
+      "stock": 20,
+      "category": "cpu",
+      "id": 1
     },
     {
-      "id": 2,
       "title": "Tarjeta Gráfica NVIDIA GeForce RTX 3080",
       "description": "Tarjeta gráfica de última generación para juegos y diseño",
       "price": 800,
-      "thumbnail": "ruta/tarjeta_grafica.jpg",
+      "thumbnail": "https://http2.mlstatic.com/D_NQ_NP_2X_874784-MLA47559042460_092021-F.webp",
       "code": "GPU002",
-      "stock": 15
+      "stock": 15,
+      "category": "gpu",
+      "id": 2
     },
     {
-      "id": 3,
-      "title": "Memoria RAM Corsair Vengeance LPX 16GB",
+      "title": "Memoria RAM Corsair Vengeance LPX 16GB 3600mhz",
       "description": "Módulo de memoria RAM DDR4 para un rendimiento rápido",
       "price": 120,
-      "thumbnail": "ruta/memoria_ram.jpg",
+      "thumbnail": "https://www.venex.com.ar/products_images/1689681349_vengance-1.png",
       "code": "RAM003",
-      "stock": 30
+      "stock": 30,
+      "category": "ram",
+      "id": 3
     },
     {
-      "id": 4,
       "title": "SSD Samsung 1TB",
       "description": "Unidad de estado sólido de alta capacidad para almacenamiento rápido",
       "price": 150,
-      "thumbnail": "ruta/ssd.jpg",
+      "thumbnail": "https://http2.mlstatic.com/D_NQ_NP_768768-MLU74162625809_012024-O.webp",
       "code": "SSD004",
-      "stock": 25
+      "stock": 25,
+      "category": "ssd",
+      "id": 4
     },
     {
-      "id": 5,
-      "title": "Placa Base ASUS ROG Strix",
+      "title": "Placa Base ASUS ROG Strix Z790-E GAMING WIFI",
       "description": "Placa base para gaming con características premium",
       "price": 250,
-      "thumbnail": "ruta/placa_base.jpg",
+      "thumbnail": "https://www.venex.com.ar/products_images/1686663849_asus.png",
       "code": "MB005",
-      "stock": 10
+      "stock": 10,
+      "category": "motherboard",
+      "id": 5
     },
     {
-      "id": 6,
       "title": "Fuente de Poder EVGA 750W",
       "description": "Fuente de poder certificada para alimentar componentes de alto rendimiento",
       "price": 100,
-      "thumbnail": "ruta/fuente_poder.jpg",
+      "thumbnail": "https://http2.mlstatic.com/D_NQ_NP_983954-MLU71567641868_092023-O.webp",
       "code": "PSU006",
-      "stock": 12
+      "stock": 12,
+      "category": "fuente",
+      "id": 6
     },
     {
-      "id": 7,
       "title": "Refrigeración líquida Corsair H100i",
       "description": "Sistema de enfriamiento líquido para mantener temperaturas bajas",
       "price": 150,
-      "thumbnail": "ruta/refrigeracion_liquida.jpg",
+      "thumbnail": "https://http2.mlstatic.com/D_NQ_NP_640944-MLA48880312511_012022-O.webp",
       "code": "COOL007",
-      "stock": 18
+      "stock": 18,
+      "category": "refrigeracion",
+      "id": 7
     },
     {
-      "id": 8,
       "title": "Teclado Mecánico Razer BlackWidow",
       "description": "Teclado mecánico para gaming con retroiluminación RGB",
       "price": 120,
-      "thumbnail": "ruta/teclado.jpg",
+      "thumbnail": "https://http2.mlstatic.com/D_NQ_NP_875425-MLA49294676896_032022-O.webp",
       "code": "KB008",
-      "stock": 22
+      "stock": 22,
+      "category": "teclado",
+      "id": 8
     },
     {
-      "id": 9,
       "title": "Mouse Logitech G Pro",
       "description": "Mouse para gaming con sensor de alta precisión",
       "price": 60,
-      "thumbnail": "ruta/mouse.jpg",
+      "thumbnail": "https://http2.mlstatic.com/D_NQ_NP_682215-MLA45464806761_042021-O.webp",
       "code": "MOUSE009",
-      "stock": 15
+      "stock": 15,
+      "category": "mouse",
+      "id": 9
     },
     {
-      "id": 10,
       "title": "Monitor ASUS 27 pulgadas",
       "description": "Monitor IPS con resolución 1440p para una experiencia visual inmersiva",
       "price": 300,
-      "thumbnail": "ruta/monitor.jpg",
+      "thumbnail": "https://http2.mlstatic.com/D_NQ_NP_665931-MLA45212708615_032021-O.webp",
       "code": "MONITOR010",
-      "stock": 8
+      "stock": 8,
+      "category": "monitor",
+      "id": 10
     }
 ]
   

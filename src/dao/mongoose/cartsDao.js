@@ -1,4 +1,5 @@
-const mongoose = require('../config/mongoose');
+import mongoose from 'mongoose';
+
 
 const cartSchema = new mongoose.Schema({
   products: [

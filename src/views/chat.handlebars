@@ -1,42 +1,18 @@
-<!-- views/chat.handlebars -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Chat</title>
-</head>
-<body>
-  <h1>Chat</h1>
-  
-  <div id="messages">
-    <!-- Aquí se mostrarán los mensajes -->
-  </div>
-  
-  <form id="chatForm">
-    <input type="text" id="messageInput" placeholder="Type your message...">
-    <button type="submit">Send</button>
-  </form>
-
-  <script src="/socket.io/socket.io.js"></script>
-  <script>
-    const socket = io();
-
-    // Lógica para escuchar eventos y actualizar la interfaz
-    socket.on('newMessage', (message) => {
-      const messagesDiv = document.getElementById('messages');
-      messagesDiv.innerHTML += `<p>${message.user}: ${message.message}</p>`;
-    });
-
-    // Lógica para enviar mensajes al servidor
-    document.getElementById('chatForm').addEventListener('submit', (event) => {
-      event.preventDefault();
-      const messageInput = document.getElementById('messageInput');
-      const message = messageInput.value;
-      socket.emit('sendMessage', { user: 'Username', message });
-      messageInput.value = '';
-    });
-  </script>
-</body>
-</html>
+<h1>Chat</h1>
+<div id="chat" class="chat-container">
+	<div id="messages-list" class="messages-list">
+		{{#each messages}}
+			<div class="message-box">
+				<small class="message-user">{{this.user}}</small>
+				<div class="message-text">{{this.message}}</div>
+				<small class="message-time">{{this.createdAt}}</small>
+			</div>
+		{{/each}}
+	</div>
+	<form id="message-form" class="message-form">
+		<input type="text" id="message-input" class="message-input" autocomplete="off" />
+		<button type="button" id="send-message-btn" class="send-message-btn">Send</button>
+	</form>
+</div>
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/chat.js"></script>
